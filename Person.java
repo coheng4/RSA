@@ -1,7 +1,7 @@
 package CompCrypt_P3;
 
 import java.util.Random;
-
+import CompCrypt_P3.RSA;
 
 /**
  * A Person Object contains a Person's public key, private key, public mod m and
@@ -10,14 +10,13 @@ import java.util.Random;
  * @author (Dylan Chow) 
  * @version (Dec 2019)
  */
-public class Person extends RSA
+public class Person
 {
     Random rnd = new Random(); //generate random number object
     long m; //public mod 
     long e; //encryption exponent 
     private long d; //private key
-    public long pubKey; //public key
-    
+
     /**
      * Generate a public key for this person, consisting of exponent, e, and mod, m.
      * Generate a private key, consisting only of exponent, d.
@@ -25,10 +24,27 @@ public class Person extends RSA
      */
     public Person()
     {
-        m = rsa.relPrime(rnd.nextLong(), rnd);
-        e = rnd.relPrime(rnd.nextLong(), rnd);        
+        //Secret prime numbers
+        long p = RSA.randPrime(111, 999, rnd);
+        long q = RSA.randPrime(111, 999, rnd);
+        while(p == q)
+        {
+            q = RSA.randPrime(11111, 99999, rnd);
+        }
+        
+        //Public Mod
+        m = p * q;
+        
+        //N value
+        long n = (p-1) * (q-1);
+        
+        //Encryption Exponent
+        e = RSA.relPrime(n, rnd);
+        
+        //Private Key
+        d = RSA.inverse(e, n);        
     }
-    
+
     /**
      * Access the public modulus, m.
      * @return the public modulus for this Person
@@ -37,7 +53,7 @@ public class Person extends RSA
     {
         return m;   
     }
-    
+
     /**
      * Access the public encryption exponent
      * @return the pubic encrytpion exponent for this Person
@@ -46,23 +62,45 @@ public class Person extends RSA
     {
         return e;
     }
-    
+
     /**
      * Encrypt a plain text msg to she.
      * @return an array of longs, which is the cipher text
      */
     public long[] encryptTo(String msg, Person she)
     {
+        long [] result = new long[(msg.length()/2) + 1]; 
+        long temp;
+        int index = 2;
+        int i = 0;
         
-        return null;
+        while(index < msg.length()+1)
+        {
+            temp = RSA.toLong(msg, index);
+            temp = RSA.modPower(temp, she.e, she.m);
+            result[i] = temp;
+            index+=2;  
+            i++;
+        }
+                
+        return result;
     }
-    
+
     /**
      * Decrypt the cipher text
      * @return a string of plain text
      */
     public String decrypt(long[] cipher)
     {
-        return null;
+        long temp;
+        String plain = "";
+        
+        for(int i = 0; i < cipher.length; i++)
+        {
+            temp = RSA.modPower(cipher[i], d, m);
+            plain = plain + RSA.longTo2Chars(temp);
+        }
+        
+        return plain;
     }
 }
