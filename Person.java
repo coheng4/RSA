@@ -25,11 +25,11 @@ public class Person
     public Person()
     {
         //Secret prime numbers
-        long p = RSA.randPrime(111, 999, rnd);
-        long q = RSA.randPrime(111, 999, rnd);
+        long p = RSA.randPrime(111, 9999, rnd);
+        long q = RSA.randPrime(111, 9999, rnd);
         while(p == q)
         {
-            q = RSA.randPrime(11111, 99999, rnd);
+            q = RSA.randPrime(111, 9999, rnd);
         }
         
         //Public Mod
