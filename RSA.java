@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /*
  * Public-key encryption implementation
  */
@@ -7,8 +9,13 @@ public class RSA {
 	 * Driver to test RSA encryption
 	 */
 	public static void main(java.lang.String[] args) {
-	Person Alice = new Person();
-	Person Bob = new Person();
+	
+	Random r = new Random();
+	System.out.println(randPrime(2, 2000, r));	
+		
+	/*
+	Person Alice = new Person(0, 0);
+	Person Bob = new Person(0, 0);
 
 	String msg = new String ("Bob, let's have lunch."); 	// message to be sent to Bob
 	long []  cipher;
@@ -29,7 +36,7 @@ public class RSA {
 	System.out.println ("Bob sends:");
 	show (cipher);
 
-	System.out.println ("Alice decodes and reads: " + Alice.decrypt (cipher));
+	System.out.println ("Alice decodes and reads: " + Alice.decrypt (cipher));*/
 	}
 	
 	/*
@@ -90,24 +97,12 @@ public class RSA {
 	 * @return A random prime in the range m..n, using rand to generate the number
 	 */
 	public static long randPrime(int m, int n, Random rand) {
-		int i = 0;
-		int num = 0;
-		String primes = "";
-		
-		for(i = m; i <= n; i++){
-			int counter = 0;
-			for(num = i; num >= 1; num--) {
-				if(i % num == 0){
-					counter = counter + 1;
-				}
-			}
-			if(counter == 2) {
-				primes = primes + i + " ";
-			}
-		}
-		long value = rand.nextLong();
-		return value;
-		
+		long num = 0;
+		boolean isPrime = false;
+		while(isPrime == false) {
+		    num = rand.nextInt(((n - m) + 1) + m);}
+			//check if num is prime here
+		return num;
 	}
 	
 	/*
@@ -115,9 +110,10 @@ public class RSA {
 	 * @return a random number relatively prime to n
 	 */
 	public static long relPrime(long n, Random rand) {
-		if(rand == 0)
+		long x = rand.nextLong();
+		if(x == 0)
 			return n;
-		return relPrime(rand, n%rand);
+		return relPrime(n%x, rand);
 	}
 	
 	/*
