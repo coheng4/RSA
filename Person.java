@@ -1,4 +1,7 @@
+package CompCrypt_P3;
+
 import java.util.Random;
+
 
 /**
  * A Person Object contains a Person's public key, private key, public mod m and
@@ -12,18 +15,18 @@ public class Person extends RSA
     Random rnd = new Random(); //generate random number object
     long m; //public mod 
     long e; //encryption exponent 
-    long d; //private key
+    private long d; //private key
+    public long pubKey; //public key
     
     /**
      * Generate a public key for this person, consisting of exponent, e, and mod, m.
      * Generate a private key, consisting only of exponent, d.
      * Provide access to public key only.
      */
-    public Person(long mod, long exp)
+    public Person()
     {
-        m = mod;
-        e = exp;
-        
+        m = rsa.relPrime(rnd.nextLong(), rnd);
+        e = rnd.relPrime(rnd.nextLong(), rnd);        
     }
     
     /**
@@ -48,8 +51,9 @@ public class Person extends RSA
      * Encrypt a plain text msg to she.
      * @return an array of longs, which is the cipher text
      */
-    public long[] encryptTo(java.lang.String msg, Person she)
+    public long[] encryptTo(String msg, Person she)
     {
+        
         return null;
     }
     
