@@ -36,10 +36,37 @@ public class RSA {
 	 * Find the multiplicative inverse of a long int
 	 * @return The inverse of e, mod m. Uses the extended Eulidean Algorithm
 	 */
-	public static long inverse(long e,
-            long m) {
-		return 0;
-	}
+	public static long inverse(long e, long m)
+    {
+        long[] u = new long[3];
+		long[] v = new long[3];
+		long q;
+		long[] c = new long[3];
+		
+		u[0] = 1;
+		u[1] = 0;
+		u[2] = m;
+		
+		v[0] = 0;
+		v[1] = 1;
+		v[2] = e;
+
+		//EEA
+		while(v[2] != 0) { 
+			q = u[2] / v[2];
+			c[0] = u[0] - (q * v[0]);
+			c[1] = u[1] - (q * v[1]);
+			c[2] = u[2] - (q * v[2]);
+			u = v;
+			v = c;
+		}
+
+		if(u[1] < 0) {
+			return (u[1] + m);
+		}
+		else
+			return u[1];
+    }
 	
 	/*
 	 * Display an array of longs on stdout
@@ -62,19 +89,35 @@ public class RSA {
 	 * Find a random prime number
 	 * @return A random prime in the range m..n, using rand to generate the number
 	 */
-	public static long randPrime(int m,
-            int n,
-            java.util.Random rand) {
-		return 0;
+	public static long randPrime(int m, int n, Random rand) {
+		int i = 0;
+		int num = 0;
+		String primes = "";
+		
+		for(i = m; i <= n; i++){
+			int counter = 0;
+			for(num = i; num >= 1; num--) {
+				if(i % num == 0){
+					counter = counter + 1;
+				}
+			}
+			if(counter == 2) {
+				primes = primes + i + " ";
+			}
+		}
+		long value = rand.nextLong();
+		return value;
+		
 	}
 	
 	/*
 	 * Find a random number relatively prime to a given long int
 	 * @return a random number relatively prime to n
 	 */
-	public static long relPrime(long n,
-            java.util.Random rand) {
-		return 0;
+	public static long relPrime(long n, Random rand) {
+		if(rand == 0)
+			return n;
+		return relPrime(rand, n%rand);
 	}
 	
 	/*
