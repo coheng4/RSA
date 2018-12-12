@@ -69,11 +69,18 @@ public class RSA {
     }
 	
 	/*
-	 * Display an array of longs on stdout
-	 */
-	public static void show(long[] cipher) {
-		
-	}
+     	* Display an array of longs on stdout
+     	* @author Dylan Chow
+     	*/
+   	public static void show(long[] cipher) 
+   {
+        
+	for(int i = 0; i < cipher.length; i++)
+        {
+            System.out.print(cipher[i]);
+        }
+        System.out.println();
+   }
 	
 	/*
 	 * Raise a number, b, to a power, p, modulo m
@@ -97,7 +104,7 @@ public class RSA {
 	
 	    /*
      * Find a random prime number
-     * @author Dave Smits
+     * @author Dave Smits, Dylan Chow
      * @return A random prime in the range m..n, using rand to generate the number
      */
     public static long randPrime(int m, int n, Random rand) {
@@ -109,7 +116,7 @@ public class RSA {
 
     /*
      * Find a random number relatively prime to a given long int
-     * @author Dave Smits
+     * @author Dave Smits, Dylan Chow
      * @return a random number relatively prime to n
      */
     public static long relPrime(long n, Random rand) {
@@ -117,11 +124,11 @@ public class RSA {
 
         for(int i = 2; i < t; i++)
         {
-            if(t % i != 0)
-                return t;                
+            if(t % i == 0)
+                return relPrime(n, rand); // t was not prime
         }
-        
-        return relPrime(n, rand);
+
+        return t;
     }
 	
 	/*
