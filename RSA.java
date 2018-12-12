@@ -133,20 +133,35 @@ public class RSA {
 	
 	/*
 	 * Convert two numeric chars to long int
-	 * @author Dave Smits
+	 * 
+	 * @author Dave Smits, Geoff Cohen
+	 * 
 	 * @return the two digit number beginning at position p of msg as a long int.
 	 */
-	public static long toLong(java.lang.String msg,
-            int p) {
-		return 0;
+	public static long toLong(java.lang.String msg, int p) {
+		long lr = 0;
+		byte l = (byte) msg.substring(p, p + 2).charAt(0);
+		byte r = (byte) msg.substring(p, p + 2).charAt(1);
+
+		lr = l;
+		lr = lr << 8;
+		lr += r;
+
+		return lr;
 	}
-	
+
 	/*
 	 * Convert a long to 2 chars
-	 * @author Dave Smits
+	 * 
+	 * @author Dave Smits, Geoff Cohen
+	 * 
 	 * @return The string made up two numeric digits representing x
 	 */
-	public static java.lang.String longTo2Chars(long x){
-		return "";
+	public static String longTo2Chars(long x) {
+		byte r = (byte) x;
+		long t = x >> 8;
+		byte l = (byte) t;
+
+		return (char) l + (char) r + "";
 	}
 }
