@@ -95,38 +95,34 @@ public class RSA {
         return result; 
     }
 	
-	/*
-	 * Find a random prime number
-	 * @author Dave Smits
-	 * @return A random prime in the range m..n, using rand to generate the number
-	 */
-	public static long randPrime(int m, int n, Random rand) {
-		long num = rand.nextInt(((n - m) + 1) + m);
-		boolean isPrime = false;
-		while(isPrime == false) {
-		    int counter = 0;
-		    long i = 0;
-		    for(i = num; i >= 1; i--){
-		    	if(num%i == 0)
-		    		counter = counter + 1;
-		    }
-		    if(counter == 2)
-		    	isPrime = true;
-		}
-		return num;
-	}
-	
-	
-	/*
-	 * Find a random number relatively prime to a given long int
-	 * @author Dave Smits
-	 * @return a random number relatively prime to n
-	 */
-	public static long relPrime(long n, Random rand) {
-		if(rand == 0)
-			return n;
-		return relPrime(rand, n%rand);
-	}
+	    /*
+     * Find a random prime number
+     * @author Dave Smits
+     * @return A random prime in the range m..n, using rand to generate the number
+     */
+    public static long randPrime(int m, int n, Random rand) {
+        
+        long num = (rand.nextInt(n) % ((n - m) + 1)) + n;
+
+        return num;
+    }
+
+    /*
+     * Find a random number relatively prime to a given long int
+     * @author Dave Smits
+     * @return a random number relatively prime to n
+     */
+    public static long relPrime(long n, Random rand) {
+        long t = rand.nextInt((int) n); //get Random t Long
+
+        for(int i = 2; i < t; i++)
+        {
+            if(t % i != 0)
+                return t;                
+        }
+        
+        return relPrime(n, rand);
+    }
 	
 	/*
 	 * Convert two numeric chars to long int
