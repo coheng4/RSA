@@ -9,30 +9,30 @@ public class RSA {
 	 * Driver to test RSA encryption
 	 */
 	public static void main(java.lang.String[] args) {
-		
-	Person Alice = new Person();
-	Person Bob = new Person();
 
-	String msg = new String ("Bob, let's have lunch."); 	// message to be sent to Bob
-	long []  cipher;
-	cipher =  Alice.encryptTo(msg, Bob);			// encrypted, with Bob's public key
+		Person Alice = new Person();
+		Person Bob = new Person();
 
-	System.out.println ("Message is: " + msg);
-	System.out.println ("Alice sends:");
-	show (cipher);
+		String msg = new String("Bob, let's have lunch."); // message to be sent to Bob
+		long[] cipher;
+		cipher = Alice.encryptTo(msg, Bob); // encrypted, with Bob's public key
 
-	System.out.println ("Bob decodes and reads: " + Bob.decrypt (cipher));	// decrypted,
-								// with Bob's private key.
-	System.out.println ();
+		System.out.println("Message is: " + msg);
+		System.out.println("Alice sends:");
+		show(cipher);
 
-	msg = new String ("No thanks, I'm busy");
-	cipher = Bob.encryptTo (msg, Alice);
-	
-	System.out.println ("Message is: " + msg);
-	System.out.println ("Bob sends:");
-	show (cipher);
+		System.out.println("Bob decodes and reads: " + Bob.decrypt(cipher)); // decrypted,
+		// with Bob's private key.
+		System.out.println();
 
-	System.out.println ("Alice decodes and reads: " + Alice.decrypt (cipher));
+		msg = new String("No thanks, I'm busy");
+		cipher = Bob.encryptTo(msg, Alice);
+
+		System.out.println("Message is: " + msg);
+		System.out.println("Bob sends:");
+		show(cipher);
+
+		System.out.println("Alice decodes and reads: " + Alice.decrypt(cipher));
 	}
 	
 	/*
@@ -49,7 +49,7 @@ public class RSA {
             return 0; 
 
         //EEA
-        while (e > 1) 
+        while (e > 1 && m != 0) 
         { 
             long q = e / m; // divide repeatedly
             long temp = m; // for holding original m
@@ -97,31 +97,29 @@ public class RSA {
 	
 	/*
 	 * Find a random prime number
+	 * @author Dave Smits
 	 * @return A random prime in the range m..n, using rand to generate the number
 	 */
 	public static long randPrime(int m, int n, Random rand) {
-		int i = 0;
-		int num = 0;
-		String primes = "";
-		
-		for(i = m; i <= n; i++){
-			int counter = 0;
-			for(num = i; num >= 1; num--) {
-				if(i % num == 0){
-					counter = counter + 1;
-				}
-			}
-			if(counter == 2) {
-				primes = primes + i + " ";
-			}
+		long num = rand.nextInt(((n - m) + 1) + m);
+		boolean isPrime = false;
+		while(isPrime == false) {
+		    int counter = 0;
+		    long i = 0;
+		    for(i = num; i >= 1; i--){
+		    	if(num%i == 0)
+		    		counter = counter + 1;
+		    }
+		    if(counter == 2)
+		    	isPrime = true;
 		}
-		long value = rand.nextLong();
-		return value;
-		
+		return num;
 	}
+	
 	
 	/*
 	 * Find a random number relatively prime to a given long int
+	 * @author Dave Smits
 	 * @return a random number relatively prime to n
 	 */
 	public static long relPrime(long n, Random rand) {
@@ -132,6 +130,7 @@ public class RSA {
 	
 	/*
 	 * Convert two numeric chars to long int
+	 * @author Dave Smits
 	 * @return the two digit number beginning at position p of msg as a long int.
 	 */
 	public static long toLong(java.lang.String msg,
@@ -141,6 +140,7 @@ public class RSA {
 	
 	/*
 	 * Convert a long to 2 chars
+	 * @author Dave Smits
 	 * @return The string made up two numeric digits representing x
 	 */
 	public static java.lang.String longTo2Chars(long x){
