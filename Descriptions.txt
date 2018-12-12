@@ -1,6 +1,6 @@
 A description of which aspects of this project work ok and which do not work ok, if any.
 
-- The Person Class takes a little longer than it should, to create an insisantiantion, 
+- The Person Class takes a little longer than it should, to create an instantiation, 
 because it uses bigger numbers to create the Public Keys and Private Keys. //Dylan Chow
 
 A description of what you would do to improve this work if you had more time.
