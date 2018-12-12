@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /*
  * Public-key encryption implementation
  */
@@ -7,6 +9,7 @@ public class RSA {
 	 * Driver to test RSA encryption
 	 */
 	public static void main(java.lang.String[] args) {
+		
 	Person Alice = new Person();
 	Person Bob = new Person();
 
@@ -34,38 +37,35 @@ public class RSA {
 	
 	/*
 	 * Find the multiplicative inverse of a long int
+	 * @author Geoff Cohen
 	 * @return The inverse of e, mod m. Uses the extended Eulidean Algorithm
 	 */
 	public static long inverse(long e, long m)
     {
-        long[] u = new long[3];
-		long[] v = new long[3];
-		long q;
-		long[] c = new long[3];
-		
-		u[0] = 1;
-		u[1] = 0;
-		u[2] = m;
-		
-		v[0] = 0;
-		v[1] = 1;
-		v[2] = e;
+		long makePositive = m; 
+		long u = 1, v = 0; 
+  
+        if (m == 1) 
+            return 0; 
 
-		//EEA
-		while(v[2] != 0) { 
-			q = u[2] / v[2];
-			c[0] = u[0] - (q * v[0]);
-			c[1] = u[1] - (q * v[1]);
-			c[2] = u[2] - (q * v[2]);
-			u = v;
-			v = c;
-		}
-
-		if(u[1] < 0) {
-			return (u[1] + m);
-		}
-		else
-			return u[1];
+        //EEA
+        while (e > 1) 
+        { 
+            long q = e / m; // divide repeatedly
+            long temp = m; // for holding original m
+  
+            m = e % m; // r
+            e = temp; // move m down
+            temp = v; // for holding v
+  
+            v = u - q * v; // calculate new v
+            u = temp; // calculate new u
+        } 
+  
+        if (u < 0) //in case negative result
+            u += makePositive; 
+        
+        return u; 
     }
 	
 	/*
@@ -77,13 +77,23 @@ public class RSA {
 	
 	/*
 	 * Raise a number, b, to a power, p, modulo m
+	 * @author Geoff Cohen
 	 * @return bp mod m
 	 */
-	public static long modPower(long b,
-            long p,
-            long m) {
-		return 0;
-	}
+	public static long modPower(long b, long p, long m)
+    {
+        b = b % m; // mod number
+        long result = 1;
+        
+        while (p > 0) { // Reduce power through shift operations; 0/1 is base case
+            if((p & 1)==1) // When power is reduced to 1, stop and calculate result
+            	result = (result * b) % m;
+            
+            b = (b * b) % m; // Increment b by one power
+            p = p >> 1; // Decrement p by one power
+        } 
+        return result; 
+    }
 	
 	/*
 	 * Find a random prime number
