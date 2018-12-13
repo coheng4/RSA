@@ -5,6 +5,8 @@ because it uses bigger numbers to create the Public Keys and Private Keys. //Dyl
 
 - Inverse method has issues with trying to divide by zero with current implementation. //Geoff Cohen
 
+- Issues with toLong and longTo2Chars working properly.
+
 A description of what you would do to improve this work if you had more time.
 
 - I would have liked to have spent more time trying to figure out a faster way to create a 
