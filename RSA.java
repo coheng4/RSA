@@ -140,8 +140,20 @@ public class RSA {
 	 */
 	public static long toLong(java.lang.String msg, int p) {
 		long lr = 0;
-		byte l = (byte) msg.substring(p, p + 2).charAt(0);
-		byte r = (byte) msg.substring(p, p + 2).charAt(1);
+		//byte l = (byte) msg.substring(p, p + 2).charAt(0);
+		//byte r = (byte) msg.substring(p, p + 2).charAt(1);
+		
+		
+        	if(p + 2 < msg.l	ength())
+        	{
+            		l = (byte) msg.substring(p, p + 2).charAt(0);
+            		r = (byte) msg.substring(p, p + 2).charAt(1);
+        	}
+        	else
+        	{
+            		l = (byte) msg.substring(p, p+1).charAt(0);
+            		r = 0;
+        	}
 
 		lr = l;
 		lr = lr << 8;
