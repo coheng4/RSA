@@ -3,7 +3,11 @@ A description of which aspects of this project work ok and which do not work ok,
 - The Person Class takes a little longer than it should, to create an instantiation, 
 because it uses bigger numbers to create the Public Keys and Private Keys. //Dylan Chow
 
+- Inverse method has issues with trying to divide by zero with current implementation. //Geoff Cohen
+
 A description of what you would do to improve this work if you had more time.
 
 - I would have liked to have spent more time trying to figure out a faster way to create a 
 Person object and ensure a better public and private key. //Dylan Chow
+
+- I would have liked more time to experiment with the driver. //Geoff Cohen
